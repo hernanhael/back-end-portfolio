@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/education")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://fontendhh.web.app")
 public class EducationController {
     @Autowired
     EducationService educationService; 
@@ -69,7 +69,7 @@ public class EducationController {
         return new ResponseEntity(new Message("Education created"), HttpStatus.OK);
     }
     
-    @PutMapping("update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DTOEducation dtoEducation) {
         if(!educationService.existsById(id)) { 
             return new ResponseEntity(new Message("The ID don't exists"), HttpStatus.NOT_FOUND); 

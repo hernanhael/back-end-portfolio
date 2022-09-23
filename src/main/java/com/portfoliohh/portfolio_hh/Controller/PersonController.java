@@ -16,31 +16,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://fontendhh.web.app")
 public class PersonController {
     @Autowired InterfacePersonService interfacePersonService;
     
-    @GetMapping("person/get")
+    @GetMapping("/person/get")
     public List<Person> getPerson(){
         return interfacePersonService.getPerson();
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("person/create")
+    @PostMapping("/person/create")
     public String createPerson(@RequestBody Person person){
         interfacePersonService.savePerson(person);
         return "The person was correctly created";
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("person/delete/{id}")
+    @DeleteMapping("/person/delete/{id}")
     public String deletPerson(@PathVariable Long id){
         interfacePersonService.deletePerson(id);
         return "The person was correctly deleted";
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("person/edit/{id}")
+    @PutMapping("/person/edit/{id}")
     public Person editPerson(@PathVariable Long id,
                                @RequestParam("name") String newName,
                                @RequestParam("lastName") String newLastName,
@@ -55,7 +55,7 @@ public class PersonController {
         return person;
     }
     
-   @GetMapping("person/get/profile")
+   @GetMapping("/person/get/profile")
     public Person findPersona(){
         return interfacePersonService.findPerson((long)1);
     }

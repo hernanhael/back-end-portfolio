@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController 
-@RequestMapping("jobexperience") 
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/jobexperience") 
+@CrossOrigin(origins = "https://fontendhh.web.app")
 public class ExperienceController {
     @Autowired
     ExperienceService experienceService; 
