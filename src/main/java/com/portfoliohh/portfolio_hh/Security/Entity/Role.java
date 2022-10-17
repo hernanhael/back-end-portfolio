@@ -13,8 +13,7 @@ import javax.validation.constraints.NotNull;
 public class Role {
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; 
-    
+    private int id;  
     @NotNull
     @Enumerated(EnumType.STRING)
     private RoleName roleName; 
@@ -44,7 +43,5 @@ public class Role {
 
     public void setRoleName(RoleName roleName) {
         this.roleName = roleName;
-    }
-
-    
+    }  
 }

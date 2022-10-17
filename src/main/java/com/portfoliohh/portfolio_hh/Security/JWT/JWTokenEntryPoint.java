@@ -19,5 +19,4 @@ public class JWTokenEntryPoint implements AuthenticationEntryPoint{
         logger.error("The commence method fail");
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
     }
-
 }

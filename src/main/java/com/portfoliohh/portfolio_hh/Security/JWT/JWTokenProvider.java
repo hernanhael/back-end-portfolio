@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class JWTokenProvider {
     private final static Logger logger = LoggerFactory.getLogger(JWTokenProvider.class);
@@ -28,7 +27,7 @@ public class JWTokenProvider {
         MainUser mainUser = (MainUser) authentication.getPrincipal();
         return Jwts.builder().setSubject(mainUser.getUsername()) 
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime()+expiration*700))
+                .setExpiration(new Date(new Date().getTime()+expiration*1000))
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     } 
@@ -37,20 +36,20 @@ public class JWTokenProvider {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public boolean validateToken(String token){
-        try{
+    public boolean validateToken(String token) {
+        try {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
-        }catch (MalformedJwtException e){
+        } catch (MalformedJwtException e) {
             logger.error("Malformed token");
-        }catch (UnsupportedJwtException e){
+        } catch (UnsupportedJwtException e) {
             logger.error("Unsupported token");
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             logger.error("Expired token");
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             logger.error("Empty token");
-        }catch (SignatureException e){
-            logger.error("Signature not valid");
+        } catch (SignatureException e) {
+            logger.error("Invalid signature");
         }
         return false;
     }

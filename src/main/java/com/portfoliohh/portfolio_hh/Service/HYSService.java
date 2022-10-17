@@ -31,7 +31,7 @@ public class HYSService {
     }
     
     public void delete(int id) { 
-        hysRepository.deleteById( id);
+        hysRepository.deleteById(id);
     }
     
     public boolean existsById(int id) { 

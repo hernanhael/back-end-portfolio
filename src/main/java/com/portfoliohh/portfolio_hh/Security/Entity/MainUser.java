@@ -9,18 +9,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 public class MainUser implements UserDetails {
+   
     private String name; 
     private String userName; 
+    private String email;
     private String password; 
-    private String email; 
     private Collection<? extends GrantedAuthority> authorities;
 
     //Constructor
-    public MainUser(String name, String userName, String password, String email, Collection<? extends GrantedAuthority> authorities) {
+    public MainUser(String name, String userName, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.name = name;
         this.userName = userName;
-        this.password = password;
         this.email = email;
+        this.password = password;
         this.authorities = authorities;
     }
     
@@ -29,8 +30,7 @@ public class MainUser implements UserDetails {
                 .map(rol -> new SimpleGrantedAuthority(rol.getRoleName().name())).collect(Collectors
                 .toList());
         return new MainUser(user.getName(), user.getUserName(), user.getEmail(),
-                 user.getPassword(), authorities);
-    
+                 user.getPassword(), authorities); 
     }    
     
     @Override
@@ -74,6 +74,5 @@ public class MainUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }    
-    
+    }      
 }

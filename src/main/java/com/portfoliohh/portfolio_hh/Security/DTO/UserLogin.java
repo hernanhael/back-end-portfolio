@@ -9,6 +9,7 @@ public class UserLogin {
     @NotBlank
     private String password; 
 
+    //Getters and Setters
     public String getUserName() {
         return userName;
     }
@@ -23,6 +24,5 @@ public class UserLogin {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-           
+    }          
 }

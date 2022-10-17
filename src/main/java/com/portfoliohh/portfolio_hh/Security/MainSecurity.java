@@ -28,7 +28,7 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
     JWTokenEntryPoint jwtEntryPoint; 
     
     @Bean
-    public JWTokenFilter jwtFilter(){
+    public JWTokenFilter jwtTokenFilter(){
         return new JWTokenFilter();
     }
     
@@ -47,7 +47,7 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);   
+        http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);   
     }
 
     @Override
