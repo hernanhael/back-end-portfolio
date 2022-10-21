@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,7 +43,7 @@ public class ExperienceController {
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody DTOExperience DTOExp) { 
         if(StringUtils.isBlank(DTOExp.getExperienceName())) 
-            return new ResponseEntity(new Message("The name es obligatory"), HttpStatus.BAD_REQUEST); 
+            return new ResponseEntity(new Message("The name is obligatory"), HttpStatus.BAD_REQUEST); 
         if(experienceService.existsByExperienceName(DTOExp.getExperienceName()))
             return new ResponseEntity(new Message("The experience all ready exists"), HttpStatus.BAD_REQUEST); 
         
@@ -71,12 +72,12 @@ public class ExperienceController {
         return new ResponseEntity(new Message("Update experience"), HttpStatus.OK);
     } 
     
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) { 
-        if(!experienceService.existsById(id))
-            return new ResponseEntity(new Message("The ID not exists"), HttpStatus.BAD_REQUEST); 
-        
-        experienceService.delete(id); 
-        
+        if(!experienceService.existsById(id)) {
+            return new ResponseEntity(new Message("The ID not exists"), HttpStatus.NOT_FOUND); 
+        }
+        experienceService.delete(id);
         return new ResponseEntity(new Message("Experience deleted"), HttpStatus.OK);
     }
 }
