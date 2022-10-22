@@ -21,7 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController 
 @RequestMapping("/jobexperience") 
-@CrossOrigin(origins = "https://fontendhh.web.app")
+//Local Host
+@CrossOrigin(origins = "http://localhost:4200")
+
+//Firebase 
+//@CrossOrigin(origins = "https://fontendhh.web.app")
 public class ExperienceController {
     @Autowired
     ExperienceService experienceService; 

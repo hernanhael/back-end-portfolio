@@ -30,8 +30,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/auth")
-@CrossOrigin(origins = "https://fontendhh.web.app")
+@RequestMapping("/auth") 
+//Local Host
+@CrossOrigin(origins = "http://localhost:4200")
+
+//Firebase 
+//@CrossOrigin(origins = "https://fontendhh.web.app")
 public class AuthController {
     @Autowired
     PasswordEncoder passwordEncoder;

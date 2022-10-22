@@ -20,8 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+//Local Host
+@CrossOrigin(origins = "http://localhost:4200")
+
+//Firebase 
+//@CrossOrigin(origins = "https://fontendhh.web.app")
 @RequestMapping("/skill")
-@CrossOrigin(origins = "https://fontendhh.web.app")
 public class HYSController {
     @Autowired
     HYSService hysService; 
