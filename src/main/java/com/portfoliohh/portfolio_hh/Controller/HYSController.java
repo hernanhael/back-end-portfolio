@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 //Local Host
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 
 //Firebase 
-//@CrossOrigin(origins = "https://fontendhh.web.app")
+@CrossOrigin(origins = "https://fontendhh.web.app")
 @RequestMapping("/skill")
 public class HYSController {
     @Autowired
