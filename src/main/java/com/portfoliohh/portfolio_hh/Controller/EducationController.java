@@ -21,11 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/education")
-//Local Host
-//@CrossOrigin(origins = "http://localhost:4200")
-
-//Firebase 
-@CrossOrigin(origins = "https://fontendhh.web.app")
+@CrossOrigin(origins = {"https://fontendhh.web.app", "http://localhost:4200"}) 
 public class EducationController {
     @Autowired
     EducationService educationService; 

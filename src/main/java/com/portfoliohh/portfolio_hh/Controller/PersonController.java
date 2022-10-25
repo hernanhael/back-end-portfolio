@@ -15,12 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-//Local Host
-//@CrossOrigin(origins = "http://localhost:4200")
-
-//Firebase 
-@CrossOrigin(origins = "https://fontendhh.web.app")
+@RestController 
+@CrossOrigin(origins = {"https://fontendhh.web.app", "http://localhost:4200"})
 public class PersonController {
     @Autowired InterfacePersonService interfacePersonService;
     
