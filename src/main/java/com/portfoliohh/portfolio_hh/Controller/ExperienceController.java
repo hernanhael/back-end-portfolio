@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/jobexperience")
+@RequestMapping("/experience")
 @CrossOrigin(origins = {"https://fontendhh.web.app", "http://localhost:4200"}) 
 public class ExperienceController {
     @Autowired
@@ -35,7 +35,7 @@ public class ExperienceController {
     @GetMapping("/detail/{id}")
     public ResponseEntity<Experience> getById(@PathVariable("id") int id){
         if(!experienceService.existsById(id))
-            return new ResponseEntity(new Message("Not exists"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new Message("Id does not exist"), HttpStatus.NOT_FOUND);
         Experience experience = experienceService.getOne(id).get();
         return new ResponseEntity(experience, HttpStatus.OK);
     }    
@@ -43,41 +43,41 @@ public class ExperienceController {
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody DTOExperience DTOExp) { 
         if(StringUtils.isBlank(DTOExp.getExperienceName())) 
-            return new ResponseEntity(new Message("The name is obligatory"), HttpStatus.BAD_REQUEST); 
+            return new ResponseEntity(new Message("Name required"), HttpStatus.BAD_REQUEST); 
         if(experienceService.existsByExperienceName(DTOExp.getExperienceName()))
-            return new ResponseEntity(new Message("The experience all ready exists"), HttpStatus.BAD_REQUEST); 
+            return new ResponseEntity(new Message("Experience already exists"), HttpStatus.BAD_REQUEST); 
         
         Experience experience = new Experience(DTOExp.getExperienceName(), DTOExp.getExperienceDescription()); 
         experienceService.save(experience);
         
-        return new ResponseEntity(new Message("Experience added"), HttpStatus.OK); 
+        return new ResponseEntity(new Message("Added experience"), HttpStatus.OK); 
     }
     
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DTOExperience DTOExp) {
         if(!experienceService.existsById(id))
-            return new ResponseEntity(new Message("The ID not exists"), HttpStatus.BAD_REQUEST); 
+            return new ResponseEntity(new Message("Id does not exist"), HttpStatus.BAD_REQUEST); 
         
         if(experienceService.existsByExperienceName(DTOExp.getExperienceName()) && experienceService.getByExperienceName(DTOExp.getExperienceName()).get().getId() != id)
-            return new ResponseEntity(new Message("The experience all ready exists"), HttpStatus.BAD_REQUEST); 
+            return new ResponseEntity(new Message("Experience already exists"), HttpStatus.BAD_REQUEST); 
         
         if(StringUtils.isBlank(DTOExp.getExperienceName())) 
-            return new ResponseEntity(new Message("You have to put a name"), HttpStatus.BAD_REQUEST); 
+            return new ResponseEntity(new Message("Experience required"), HttpStatus.BAD_REQUEST); 
         
         Experience experience = experienceService.getOne(id).get(); 
         experience.setExperienceName(DTOExp.getExperienceName()); 
         experience.setExperienceDescription(DTOExp.getExperienceDescription());
         
         experienceService.save(experience);
-        return new ResponseEntity(new Message("Update experience"), HttpStatus.OK);
+        return new ResponseEntity(new Message("Updated experience"), HttpStatus.OK);
     } 
     
     @DeleteMapping("delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) { 
         if(!experienceService.existsById(id)) {
-            return new ResponseEntity(new Message("The ID not exists"), HttpStatus.NOT_FOUND); 
+            return new ResponseEntity(new Message("Id does not exist"), HttpStatus.NOT_FOUND); 
         }
         experienceService.delete(id);
-        return new ResponseEntity(new Message("Experience deleted"), HttpStatus.OK);
+        return new ResponseEntity(new Message("Deleted experience"), HttpStatus.OK);
     }
 }

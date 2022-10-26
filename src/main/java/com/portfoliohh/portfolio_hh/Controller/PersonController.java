@@ -4,7 +4,6 @@ import com.portfoliohh.portfolio_hh.Entity.Person;
 import com.portfoliohh.portfolio_hh.Interface.InterfacePersonService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,21 +24,18 @@ public class PersonController {
         return interfacePersonService.getPerson();
     }
     
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/person/create")
     public String createPerson(@RequestBody Person person){
         interfacePersonService.savePerson(person);
-        return "The person was correctly created";
+        return "Added person";
     }
     
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/person/delete/{id}")
-    public String deletPerson(@PathVariable Long id){
+    public String deletePerson(@PathVariable Long id){
         interfacePersonService.deletePerson(id);
-        return "The person was correctly deleted";
+        return "Deleted person";
     }
-    
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PutMapping("/person/edit/{id}")
     public Person editPerson(@PathVariable Long id,
                                @RequestParam("name") String newName,
@@ -59,5 +55,4 @@ public class PersonController {
     public Person findPersona(){
         return interfacePersonService.findPerson((long)1);
     }
-   
 }

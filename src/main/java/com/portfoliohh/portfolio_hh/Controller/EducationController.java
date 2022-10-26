@@ -35,50 +35,48 @@ public class EducationController {
     @GetMapping("/detail/{id}")
     public ResponseEntity<Education> getById(@PathVariable("id") int id) { 
         if(!educationService.existsById(id)) { 
-            return new ResponseEntity(new Message("ID don't exists"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("Id does not exist"), HttpStatus.BAD_REQUEST);
         }
         
         Education education = educationService.getOne(id).get();
         return new ResponseEntity(education, HttpStatus.OK);                             
     }
-   
-    
     
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) { 
         if(!educationService.existsById(id)) { 
-            return new ResponseEntity(new Message("Id not exists"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new Message("Id does not exist"), HttpStatus.NOT_FOUND);
         }
         educationService.delete(id);
-        return new ResponseEntity(new Message("Education deleted"), HttpStatus.OK);
+        return new ResponseEntity(new Message("Deleted education"), HttpStatus.OK);
     }
     
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody DTOEducation dtoEducation) { 
         if(StringUtils.isBlank(dtoEducation.getEducationName())) {
-            return new ResponseEntity(new Message("Write a name"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("Name required"), HttpStatus.BAD_REQUEST);
         }
         if(educationService.existsByEducationName(dtoEducation.getEducationName())) { 
-            return new ResponseEntity(new Message("The name all ready exists"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("Name already exists"), HttpStatus.BAD_REQUEST);
         }
         
         Education education = new Education(
                 dtoEducation.getEducationName(), dtoEducation.getEducationDescription()
         );
         educationService.save(education);
-        return new ResponseEntity(new Message("Education created"), HttpStatus.OK);
+        return new ResponseEntity(new Message("Created education"), HttpStatus.OK);
     }
     
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DTOEducation dtoEducation) {
         if(!educationService.existsById(id)) { 
-            return new ResponseEntity(new Message("The ID don't exists"), HttpStatus.NOT_FOUND); 
+            return new ResponseEntity(new Message("Id does not exist"), HttpStatus.NOT_FOUND); 
         }
         if(!educationService.existsByEducationName(dtoEducation.getEducationName()) && educationService.getByEducationName(dtoEducation.getEducationName()).get().getId() != id) { 
-            return new ResponseEntity(new Message("The name all ready exists"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("Name already exists"), HttpStatus.BAD_REQUEST);
         }
         if(StringUtils.isBlank(dtoEducation.getEducationName())) { 
-            return new ResponseEntity(new Message("Empty slot"), HttpStatus.BAD_REQUEST); 
+            return new ResponseEntity(new Message("Name required"), HttpStatus.BAD_REQUEST); 
         }
         
         Education education = educationService.getOne(id).get();
@@ -88,7 +86,6 @@ public class EducationController {
         
         educationService.save(education); 
         
-        return new ResponseEntity(new Message("Education update"), HttpStatus.OK); 
-    } 
-            
+        return new ResponseEntity(new Message("Updated education"), HttpStatus.OK); 
+    }       
 }
