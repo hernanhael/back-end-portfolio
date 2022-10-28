@@ -50,11 +50,11 @@ public class AuthController {
             return new ResponseEntity(new Message("Wrong input or invalid email"),HttpStatus.BAD_REQUEST); 
         
         if(userService.existsByUserName(newUser.getUserName()))
-            return new ResponseEntity(new Message("Username allready exists"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("Username already exists"), HttpStatus.BAD_REQUEST);
         
         
         if(userService.existsByEmail(newUser.getEmail())) 
-            return new ResponseEntity(new Message ("Email allready exists"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message ("Email already exists"), HttpStatus.BAD_REQUEST);
         
         
         User user = new User(newUser.getName(), newUser.getUserName(),
@@ -74,7 +74,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<JWTokenDTO> login(@Valid @RequestBody UserLogin userLogin, BindingResult bindingResult){
         if(bindingResult.hasErrors())
-            return new ResponseEntity(new Message("Wrong 1111input"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("Wrong input"), HttpStatus.BAD_REQUEST);
         
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
         userLogin.getUserName(), userLogin.getPassword()));
