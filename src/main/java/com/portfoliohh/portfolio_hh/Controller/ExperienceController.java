@@ -56,7 +56,7 @@ public class ExperienceController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DTOExperience DTOExp) {
         if(!experienceService.existsById(id))
-            return new ResponseEntity(new Message("Id does not exist"), HttpStatus.BAD_REQUEST); 
+            return new ResponseEntity(new Message("Id does not exist"), HttpStatus.NOT_FOUND); 
         
         if(experienceService.existsByExperienceName(DTOExp.getExperienceName()) && experienceService.getByExperienceName(DTOExp.getExperienceName()).get().getId() != id)
             return new ResponseEntity(new Message("Experience already exists"), HttpStatus.BAD_REQUEST); 

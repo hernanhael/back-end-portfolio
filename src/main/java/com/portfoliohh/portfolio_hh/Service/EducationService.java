@@ -9,36 +9,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@Transactional
+@Transactional 
 public class EducationService {
     @Autowired
-    InterfaceEducationRepository interfaceEducationRepository;
-            
-    public List<Education> list() { 
-        return interfaceEducationRepository.findAll();
-    }
+    InterfaceEducationRepository educationRepository; 
+    
+    public List<Education> list() {
+        return educationRepository.findAll();
+    }   
     
     public Optional<Education> getOne(int id) { 
-        return interfaceEducationRepository.findById(id);
-    }
-    
-    public Optional<Education> getByEducationName(String educationName) { 
-        return interfaceEducationRepository.findByEducationName(educationName);
+        return educationRepository.findById(id);
     } 
     
-    public void save(Education education) { 
-        interfaceEducationRepository.save(education); 
+    public Optional<Education> getByEducationName(String educationName) { 
+        return educationRepository.findByEducationName(educationName);  
     }
+    
+    public void save(Education education) { 
+        educationRepository.save(education);
+    } 
     
     public void delete(int id) { 
-        interfaceEducationRepository.deleteById(id);
-    }
+        educationRepository.deleteById(id);        
+    } 
     
     public boolean existsById(int id) { 
-        return interfaceEducationRepository.existsById(id);
+        return educationRepository.existsById(id);
     }
     
-    public boolean existsByEducationName (String educationName) { 
-        return interfaceEducationRepository.existsByEducationName(educationName);
+    public boolean existsByEducationName(String educationName) { 
+        return educationRepository.existsByEducationName(educationName);
     }
 }

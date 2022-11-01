@@ -34,9 +34,10 @@ public class HYSController {
     } 
     
     @GetMapping("/detail/{id}")
-    public ResponseEntity<HYS> getById(@PathVariable("id") int id){
-        if(!hysService.existsById(id))
+    public ResponseEntity<HYS> getById(@PathVariable("id") int id) {
+        if(!hysService.existsById(id)) {
             return new ResponseEntity(new Message("Unfind id"), HttpStatus.NOT_FOUND);
+        }    
         HYS hys = hysService.getOne(id).get();
         return new ResponseEntity(hys, HttpStatus.OK);
     }    
@@ -56,14 +57,15 @@ public class HYSController {
     
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DTOHYS DTOhys) {
-        if(!hysService.existsById(id))
+        if(!hysService.existsById(id)) {
             return new ResponseEntity(new Message("Unfind id"), HttpStatus.BAD_REQUEST); 
-        
-        if(hysService.existsByName(DTOhys.getName()) && hysService.getByName(DTOhys.getName()).get().getId() != id)
+        }
+        if(hysService.existsByName(DTOhys.getName()) && hysService.getByName(DTOhys.getName()).get().getId() != id) {
             return new ResponseEntity(new Message("Skill already exists"), HttpStatus.BAD_REQUEST); 
-        
-        if(StringUtils.isBlank(DTOhys.getName())) 
-            return new ResponseEntity(new Message("Added skill"), HttpStatus.BAD_REQUEST); 
+        }
+        if(StringUtils.isBlank(DTOhys.getName())) {
+            return new ResponseEntity(new Message("Obligatory name"), HttpStatus.BAD_REQUEST); 
+        }
         
         HYS hys = hysService.getOne(id).get(); 
         hys.setName(DTOhys.getName()); 
@@ -78,8 +80,7 @@ public class HYSController {
         if(!hysService.existsById(id))
             return new ResponseEntity(new Message("Unfind id"), HttpStatus.BAD_REQUEST); 
         
-        hysService.delete(id); 
-        
+        hysService.delete(id);
         return new ResponseEntity(new Message("Skill deleted"), HttpStatus.OK);
     }
 }

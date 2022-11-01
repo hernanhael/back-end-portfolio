@@ -34,10 +34,9 @@ public class EducationController {
     
     @GetMapping("/detail/{id}")
     public ResponseEntity<Education> getById(@PathVariable("id") int id) { 
-        if(!educationService.existsById(id)) { 
+        if(!educationService.existsById(id)) {  
             return new ResponseEntity(new Message("Id does not exist"), HttpStatus.BAD_REQUEST);
         }
-        
         Education education = educationService.getOne(id).get();
         return new ResponseEntity(education, HttpStatus.OK);                             
     }
@@ -68,24 +67,21 @@ public class EducationController {
     }
     
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DTOEducation dtoEducation) {
-        if(!educationService.existsById(id)) { 
+    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DTOEducation DTOEdu) {
+        if(!educationService.existsById(id))
             return new ResponseEntity(new Message("Id does not exist"), HttpStatus.NOT_FOUND); 
-        }
-        if(!educationService.existsByEducationName(dtoEducation.getEducationName()) && educationService.getByEducationName(dtoEducation.getEducationName()).get().getId() != id) { 
-            return new ResponseEntity(new Message("Name already exists"), HttpStatus.BAD_REQUEST);
-        }
-        if(StringUtils.isBlank(dtoEducation.getEducationName())) { 
-            return new ResponseEntity(new Message("Name required"), HttpStatus.BAD_REQUEST); 
-        }
         
-        Education education = educationService.getOne(id).get();
+        if(educationService.existsByEducationName(DTOEdu.getEducationName()) && educationService.getByEducationName(DTOEdu.getEducationName()).get().getId() != id)
+            return new ResponseEntity(new Message("Education already exists"), HttpStatus.BAD_REQUEST); 
         
-        education.setEducationName(dtoEducation.getEducationName());
-        education.setEducationDescription(dtoEducation.getEducationDescription()); 
+        if(StringUtils.isBlank(DTOEdu.getEducationName())) 
+            return new ResponseEntity(new Message("Education required"), HttpStatus.BAD_REQUEST); 
         
-        educationService.save(education); 
+        Education education = educationService.getOne(id).get(); 
+        education.setEducationName(DTOEdu.getEducationName()); 
+        education.setEducationDescription(DTOEdu.getEducationDescription());
         
-        return new ResponseEntity(new Message("Updated education"), HttpStatus.OK); 
-    }       
+        educationService.save(education);
+        return new ResponseEntity(new Message("Updated education"), HttpStatus.OK);
+    } 
 }
